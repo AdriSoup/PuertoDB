@@ -53,6 +53,7 @@
             font-size: 2rem;
             font-weight: bold;
             background: linear-gradient(90deg, #66c0f4, #8be9fd);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-align: center;
@@ -73,6 +74,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             width: 80%;
             max-width: 1200px;
+            overflow: auto; 
         }
 
         footer {
@@ -82,6 +84,7 @@
             padding: 1rem 0;
             border-top: 1px solid #4d4d4d;
             font-size: 0.9rem;
+            margin-top: auto; 
         }
 
         footer a {
@@ -124,15 +127,113 @@
         button:hover {
             background-color: #549bbd;
         }
+
+        
+        .menu-button {
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column; 
+            align-items: flex-start;
+        }
+
+        .menu-button div {
+            width: 25px;
+            height: 3px;
+            background-color: #c7d5e0;
+            margin: 4px 0;
+            border-radius: 2px;
+        }
+
+        
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #20232a;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+            padding: 1rem;
+            display: none; 
+            z-index: 1000;
+        }
+
+        .side-menu.open {
+            display: block; 
+        }
+
+        .side-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .side-menu ul li {
+            margin: 1rem 0;
+        }
+
+        .side-menu ul li a {
+            color: #c7d5e0;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .close-menu-button {
+            background: none;
+            border: none;
+            color: #c7d5e0;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .custom-menu-button {
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .custom-menu-button div {
+            width: 30px;
+            height: 4px;
+            background-color: #ffffff; 
+            margin: 2px 0; 
+            border-radius: 3px; 
+        }
     </style>
 </head>
 <body>
     <header>
+        <button class="custom-menu-button" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </button>
         <h1>PuertoDB</h1>
         <button class="header-button">
             <img src="imagenes\25313.png" alt="Botón">
         </button>
     </header>
+
+    <!-- este es el menú que despliega las cositas -->
+    <nav class="side-menu" id="sideMenu">
+        <button class="close-menu-button" onclick="toggleMenu()">×</button>
+        <ul>
+            <li><a href="#">Placeholder</a></li>
+            <li><a href="#">Placeholder</a></li>
+            <li><a href="#">Placeholder</a></li>
+            <li><a href="#">Placeholder</a></li>
+        </ul>
+    </nav>
+
     <h1 class="gradient-text">Bienvenido a la Base de Datos de Videojuegos.</h1>
     <main>
         <div class="table-container">
@@ -142,5 +243,13 @@
     <footer>
         <p>&copy; 2025 Videojuegos. Todos los derechos reservados.</p>
     </footer>
+
+    <script>
+        // Esto es para cerrar el desplegable 
+        function toggleMenu() {
+            const menu = document.getElementById('sideMenu');
+            menu.classList.toggle('open');
+        }
+    </script>
 </body>
 </html>
