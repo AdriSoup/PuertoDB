@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videojuegos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #161920;
+            color: #c7d5e0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #040406;
+            color: #c7d5e0;
+            padding: 0.2rem 1rem;
+            border-bottom: 1px solid #4d4d4d;
+            display: flex;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            flex-grow: 1; 
+            text-align: center; 
+        }
+
+        .header-button {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .header-button img {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+
+        .header-button:hover img {
+            opacity: 0.8; 
+        }
+
+        .gradient-text {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #66c0f4, #8be9fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .table-container {
+            background-color: #20232a;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 1200px;
+        }
+
+        footer {
+            background-color: #171a21;
+            color: #c7d5e0;
+            text-align: center;
+            padding: 1rem 0;
+            border-top: 1px solid #4d4d4d;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #66c0f4;
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+
+        footer .links {
+            margin-bottom: 0.5rem;
+        }
+
+        a {
+            color: #66c0f4;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        button {
+            background-color: #66c0f4;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background-color: #549bbd;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>PuertoDB</h1>
+        <button class="header-button">
+            <img src="imagenes\25313.png" alt="Botón">
+        </button>
+    </header>
+    <h1 class="gradient-text">Bienvenido a la Base de Datos de Videojuegos.</h1>
+    <main>
+        <div class="table-container">
+            <p>Aquí puedes colocar tus tablas.</p>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Videojuegos. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
