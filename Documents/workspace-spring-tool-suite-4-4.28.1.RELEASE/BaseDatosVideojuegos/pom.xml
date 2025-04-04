@@ -12,7 +12,7 @@
 	<groupId>com.daw</groupId>
 	<artifactId>PuertoDB</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>PuertoDBC</name>
+	<name>PuertoDB</name>
 	<description>Basic Videogame Data Base.</description>
 	<url />
 	<licenses>
