@@ -97,7 +97,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             width: 80%;
             max-width: 1200px;
-            overflow: auto; 
+            margin: 0 auto;
         }
 
         footer {
@@ -253,6 +253,120 @@
             outline: none;
             border-color: #66c0f4;
         }
+
+        .header-lista {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .header-lista h2 {
+            margin: 0;
+            color: #c7d5e0;
+        }
+
+        .boton-anadir {
+            background-color: #66c0f4;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .boton-anadir:hover {
+            background-color: #549bbd;
+        }
+
+        .lista-videojuegos {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .lista-videojuegos li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem;
+            border-bottom: 1px solid #4d4d4d;
+            color: #c7d5e0;
+        }
+
+        .lista-videojuegos li img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 1rem;
+        }
+
+        .nombre-videojuego {
+            flex: 1;
+        }
+
+        .opcion {
+            margin-left: 1rem;
+            color: #66c0f4;
+            text-decoration: none;
+        }
+
+        .opcion:hover {
+            text-decoration: underline;
+        }
+
+        #modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #20232a;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            width: 98%; /* Ocupa el 98% del ancho de la pantalla */
+            max-width: 1200px; /* Establece un ancho máximo para el modal */
+        }
+
+        .modal-contenido {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-contenido label {
+            margin-top: 0.5rem;
+        }
+
+        .modal-contenido input, .modal-contenido textarea {
+            padding: 0.5rem;
+            margin-top: 0.2rem;
+            border: 1px solid #4d4d4d;
+            border-radius: 4px;
+            background-color: #161920;
+            color: #c7d5e0;
+            width: 100%; /* Asegura que los campos ocupen todo el ancho del modal */
+        }
+
+        .modal-contenido input[type="text"],
+        .modal-contenido input[type="date"],
+        .modal-contenido input[type="number"] {
+            width: 70%; /* Reduce el ancho de los campos que no necesitan ocupar todo el modal */
+        }
+
+        .modal-contenido textarea {
+            width: 100%; /* El campo de descripción ocupa todo el ancho */
+        }
+
+        .modal-contenido button {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -287,9 +401,42 @@
     <h1 class="gradient-text">Bienvenido a la Base de Datos de Videojuegos.</h1>
     <main>
         <div class="table-container">
-            <p>Aquí puedes colocar tus tablas.</p>
+            <div class="header-lista">
+                <h2>Lista de Videojuegos</h2>
+                <button class="boton-anadir" onclick="abrirModalAñadir()">Añadir Videojuego</button>
+            </div>
+            <ul class="lista-videojuegos" id="listaVideojuegos">
+                <!-- Los videojuegos se cargarán dinámicamente aquí -->
+            </ul>
         </div>
     </main>
+
+    <!-- Modal para añadir o modificar videojuegos -->
+    <div id="modal" style="display: none;">
+        <div class="modal-contenido">
+            <h3 id="modalTitulo">Añadir/Modificar Videojuego</h3>
+            <input type="hidden" id="idVideojuego">
+            <label for="tituloVideojuego">Título:</label>
+            <input type="text" id="tituloVideojuego">
+            <label for="fechaLanzamiento">Fecha de Lanzamiento:</label>
+            <input type="date" id="fechaLanzamiento">
+            <label for="genero">Género:</label>
+            <input type="text" id="genero">
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion"></textarea>
+            <label for="precio">Precio:</label>
+            <input type="number" id="precio" step="0.01">
+            <label for="desarrollador">Desarrollador:</label>
+            <input type="text" id="desarrollador" placeholder="Escribe el nombre del desarrollador">
+            <label for="plataformas">Plataformas:</label>
+            <input type="text" id="plataformas" placeholder="Escribe las plataformas separadas por comas">
+            <label for="imagenUrl">URL de la Imagen:</label>
+            <input type="text" id="imagenUrl" placeholder="https://example.com/imagen.jpg">
+            <button id="guardarVideojuego" onclick="guardarVideojuego()">Guardar</button>
+            <button onclick="cerrarModal()">Cancelar</button>
+        </div>
+    </div>
+
     <footer>
         <p>&copy; 2025 Videojuegos. Todos los derechos reservados.</p>
     </footer>
@@ -309,6 +456,124 @@
             } else {
                 searchBar.style.display = 'none'; // Oculta la barra de búsqueda
             }
+        }
+
+        function anadirVideojuego() {
+            // Ejemplo de cómo añadir un videojuego dinámicamente
+            const lista = document.getElementById('listaVideojuegos');
+            const nuevoVideojuego = document.createElement('li');
+
+            nuevoVideojuego.innerHTML = `
+                <span class="nombre-videojuego">Nuevo Videojuego</span>
+                <a href="ficha-tecnica.html" class="opcion">Ficha Técnica</a>
+                <a href="desarrollador.html" class="opcion">Desarrollador</a>
+                <a href="plataforma.html" class="opcion">Plataforma</a>
+            `;
+
+            lista.appendChild(nuevoVideojuego);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            buscarVideojuegos();
+        });
+
+        function buscarVideojuegos() {
+            fetch("http://localhost:9999/consulta_videojuegos")
+                .then(res => res.json())
+                .then(videojuegos => {
+                    const lista = document.getElementById("listaVideojuegos");
+                    lista.innerHTML = ""; // Limpiar la lista antes de cargar
+                    videojuegos.forEach(videojuego => {
+                        const li = document.createElement("li");
+                        li.innerHTML = `
+                            <img src="${videojuego.imagenUrl || 'https://via.placeholder.com/50'}" alt="Imagen de ${videojuego.titulo}">
+                            <span class="nombre-videojuego">${videojuego.titulo}</span>
+                            <a href="ficha-tecnica.html?id=${videojuego.id}" class="opcion">Ficha Técnica</a>
+                            <a href="desarrollador.html?nombre=${videojuego.desarrollador}" class="opcion">Desarrollador</a>
+                            <a href="plataforma.html?plataformas=${videojuego.plataformas}" class="opcion">Plataformas</a>
+                            <button onclick="abrirModalModificar(${videojuego.id}, '${videojuego.titulo}', '${videojuego.fechaLanzamiento}', '${videojuego.genero}', '${videojuego.descripcion}', ${videojuego.precio}, '${videojuego.imagenUrl}', '${videojuego.desarrollador}', '${videojuego.plataformas}')">Modificar</button>
+                        `;
+                        lista.appendChild(li);
+                    });
+                })
+                .catch(e => console.error("Error al cargar videojuegos:", e));
+        }
+
+        function abrirModalAñadir() {
+            document.getElementById("modalTitulo").textContent = "Añadir Videojuego";
+            document.getElementById("idVideojuego").value = "";
+            document.getElementById("tituloVideojuego").value = "";
+            document.getElementById("fechaLanzamiento").value = "";
+            document.getElementById("genero").value = "";
+            document.getElementById("descripcion").value = "";
+            document.getElementById("precio").value = "";
+            document.getElementById("imagenUrl").value = "";
+            document.getElementById("desarrollador").value = "";
+            document.getElementById("plataformas").value = "";
+            document.getElementById("guardarVideojuego").setAttribute("onclick", "guardarVideojuego()");
+            document.getElementById("modal").style.display = "block";
+        }
+
+        function abrirModalModificar(id, titulo, fechaLanzamiento, genero, descripcion, precio, imagenUrl, desarrollador, plataformas) {
+            document.getElementById("modalTitulo").textContent = "Modificar Videojuego";
+            document.getElementById("idVideojuego").value = id;
+            document.getElementById("tituloVideojuego").value = titulo;
+            document.getElementById("fechaLanzamiento").value = fechaLanzamiento;
+            document.getElementById("genero").value = genero;
+            document.getElementById("descripcion").value = descripcion;
+            document.getElementById("precio").value = precio;
+            document.getElementById("imagenUrl").value = imagenUrl;
+            document.getElementById("desarrollador").value = desarrollador;
+            document.getElementById("plataformas").value = plataformas;
+            document.getElementById("guardarVideojuego").setAttribute("onclick", "modificarVideojuego()");
+            document.getElementById("modal").style.display = "block";
+        }
+
+        function cerrarModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+
+        function guardarVideojuego() {
+            const titulo = document.getElementById("tituloVideojuego").value;
+            const fechaLanzamiento = document.getElementById("fechaLanzamiento").value;
+            const genero = document.getElementById("genero").value;
+            const descripcion = document.getElementById("descripcion").value;
+            const precio = document.getElementById("precio").value;
+            const desarrollador = document.getElementById("desarrollador").value;
+            const plataformas = document.getElementById("plataformas").value;
+            const imagenUrl = document.getElementById("imagenUrl").value;
+
+            const url = `http://localhost:9999/crear_videojuego?titulo=${titulo}&fechaLanzamiento=${fechaLanzamiento}&genero=${genero}&descripcion=${descripcion}&precio=${precio}&desarrollador=${desarrollador}&plataformas=${plataformas}&imagenUrl=${imagenUrl}`;
+
+            fetch(url)
+                .then(res => res.text())
+                .then(() => {
+                    buscarVideojuegos();
+                    cerrarModal();
+                })
+                .catch(e => console.error("Error al guardar videojuego:", e));
+        }
+
+        function modificarVideojuego() {
+            const id = document.getElementById("idVideojuego").value;
+            const titulo = document.getElementById("tituloVideojuego").value;
+            const fechaLanzamiento = document.getElementById("fechaLanzamiento").value;
+            const genero = document.getElementById("genero").value;
+            const descripcion = document.getElementById("descripcion").value;
+            const precio = document.getElementById("precio").value;
+            const desarrollador = document.getElementById("desarrollador").value;
+            const plataformas = document.getElementById("plataformas").value;
+            const imagenUrl = document.getElementById("imagenUrl").value;
+
+            const url = `http://localhost:9999/modificar_videojuego?id=${id}&titulo=${titulo}&fechaLanzamiento=${fechaLanzamiento}&genero=${genero}&descripcion=${descripcion}&precio=${precio}&desarrollador=${desarrollador}&plataformas=${plataformas}&imagenUrl=${imagenUrl}`;
+
+            fetch(url)
+                .then(res => res.text())
+                .then(() => {
+                    buscarVideojuegos();
+                    cerrarModal();
+                })
+                .catch(e => console.error("Error al modificar videojuego:", e));
         }
     </script>
 </body>
